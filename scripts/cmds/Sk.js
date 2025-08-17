@@ -1,4 +1,3 @@
-const { GoatWrapper } = require("fca-liane-utils");
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
@@ -108,6 +107,7 @@ module.exports = {
     author: "SK-SIDDIK-KHAN",
     shortDescription: "",
     longDescription: "",
+    usePrefix: false,
     category: "video",
     guide: {
       en: "{p}overlay templateNumber"
@@ -328,4 +328,3 @@ function execPromise(command) {
     });
   });
 }
-const wrapper = new GoatWrapper(module.exports); wrapper.applyNoPrefix({ allowPrefix: true });

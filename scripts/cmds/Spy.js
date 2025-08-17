@@ -1,4 +1,3 @@
-const { GoatWrapper } = require("fca-liane-utils");
 module.exports = {
 
 config: {
@@ -8,6 +7,8 @@ name: "spy",
 version: "1.0.0",
 
 role: 0,
+
+usePrefix: false,
 
 author: "SK-SIDDIK-KHAN",
 
@@ -113,4 +114,3 @@ while (num >= 1000 && ++unit < units.length) num /= 1000;
 return num.toFixed(1).replace(/\.0$/, "") + units[unit];
 
 }
-const wrapper = new GoatWrapper(module.exports); wrapper.applyNoPrefix({ allowPrefix: true });

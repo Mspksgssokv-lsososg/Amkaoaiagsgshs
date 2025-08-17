@@ -1,4 +1,3 @@
-const { GoatWrapper } = require("fca-liane-utils");
 const { findUid } = global.utils;
 const regExCheckURL = /^(http|https):\/\/[^ "]+$/;
  
@@ -9,6 +8,7 @@ module.exports = {
 		author: "SK-SIDDIK-KHAN",
 		countDown: 5,
 		role: 0,
+		usePrefix: false,
 		shortDescription: {
 			vi: "Xem uid",
 			en: "View uid"
@@ -66,4 +66,3 @@ module.exports = {
 		message.reply(msg || getLang("syntaxError"));
 	}
 };
-const wrapper = new GoatWrapper(module.exports); wrapper.applyNoPrefix({ allowPrefix: true });

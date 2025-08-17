@@ -1,4 +1,3 @@
-const { GoatWrapper } = require("fca-liane-utils");
 const axios = require('axios');
 
 module.exports = {
@@ -8,6 +7,7 @@ module.exports = {
  author: "SIDDIK",
  countDown: 2,
  role: 0,
+ usePrefix: false,
  shortDescription: "Fetches the current time for a specified location",
  longDescription: "This command fetches the current time for a specified location using the IPGeolocation API. Use the command with a location name or coordinates.",
  category: "INFO",
@@ -79,4 +79,3 @@ const rul = 'https://i.imgur.com/gTe2xTc.png';
  }
  },
 }
-const wrapper = new GoatWrapper(module.exports); wrapper.applyNoPrefix({ allowPrefix: true });

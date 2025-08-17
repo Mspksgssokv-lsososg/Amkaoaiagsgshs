@@ -1,8 +1,16 @@
+if (typeof process.stderr.clearLine !== "function") {
+  process.stderr.clearLine = () => {};
+}
+if (typeof process.stderr.cursorTo !== "function") {
+  process.stderr.cursorTo = () => {};
+}
+
 module.exports.config = {
    name: "setting",
     version: "1.0.0",
     role: 2,
     author: "SK-SIDDIK-KHAN",
+    usePrefix: true,
     Description: "",
     category: "admin",
     usages: "",

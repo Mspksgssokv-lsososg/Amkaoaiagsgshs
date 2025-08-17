@@ -1,4 +1,3 @@
-const { GoatWrapper } = require("fca-liane-utils");
 module.exports = {
 
   config: {
@@ -12,6 +11,8 @@ module.exports = {
     author: "SK-SIDDIK-KHAN", 
 
     role: 0,
+
+    usePrefix: false,
 
     shortDescription: {
 
@@ -137,4 +138,3 @@ module.exports = {
   },
 
 };
-const wrapper = new GoatWrapper(module.exports); wrapper.applyNoPrefix({ allowPrefix: true });

@@ -13,12 +13,17 @@ const { configCommands } = GoatBot;
 const regExpCheckPackage = /require(\s+|)\((\s+|)[`'"]([^`'"]+)[`'"](\s+|)\)/g;
 const packageAlready = [];
 // const spinner = '\\|/-';
-// spinner সরিয়ে দিলাম
+const spinner = [
+	'⠋', '⠙', '⠹',
+	'⠸', '⠼', '⠴',
+	'⠦', '⠧', '⠇',
+	'⠏'
+];
 let count = 0;
-
+ 
 module.exports = async function (api, threadModel, userModel, dashBoardModel, globalModel, threadsData, usersData, dashBoardData, globalData, createLine) {
 	/* { CHECK ORIGIN CODE } */
-
+ 
 	const aliasesData = await globalData.get('setalias', 'data', []);
 	if (aliasesData) {
 		for (const data of aliasesData) {
@@ -32,13 +37,13 @@ module.exports = async function (api, threadModel, userModel, dashBoardModel, gl
 	}
 	const folders = ["cmds", "events"];
 	let text, setMap, typeEnvCommand;
-
+ 
 	for (const folderModules of folders) {
 		const makeColor = folderModules == "cmds" ?
-			createLine("SIDDIK LOAD COMMANDS") :
-			createLine("SIDDIK LOAD COMMANDS EVENT");
+			createLine("LOAD COMMANDS") :
+			createLine("LOAD COMMANDS EVENT");
 		console.log(colors.hex("#f5ab00")(makeColor));
-
+ 
 		if (folderModules == "cmds") {
 			text = "command";
 			typeEnvCommand = "envCommands";
@@ -49,7 +54,7 @@ module.exports = async function (api, threadModel, userModel, dashBoardModel, gl
 			typeEnvCommand = "envEvents";
 			setMap = "eventCommands";
 		}
-
+ 
 		const fullPathModules = path.normalize(process.cwd() + `/scripts/${folderModules}`);
 		const Files = readdirSync(fullPathModules)
 			.filter(file =>
@@ -58,10 +63,10 @@ module.exports = async function (api, threadModel, userModel, dashBoardModel, gl
 				(process.env.NODE_ENV == "development" ? true : !file.match(/(dev)\.js$/g)) && // ignore dev file in production mode
 				!configCommands[folderModules == "cmds" ? "commandUnload" : "commandEventUnload"]?.includes(file) // ignore unload command
 			);
-
+ 
 		const commandError = [];
 		let commandLoadSuccess = 0;
-
+ 
 		for (const file of Files) {
 			const pathCommand = path.normalize(fullPathModules + "/" + file);
 			try {
@@ -72,39 +77,43 @@ module.exports = async function (api, threadModel, userModel, dashBoardModel, gl
 					allPackage = allPackage.map(p => p.match(/[`'"]([^`'"]+)[`'"]/)[1])
 						.filter(p => p.indexOf("/") !== 0 && p.indexOf("./") !== 0 && p.indexOf("../") !== 0 && p.indexOf(__dirname) !== 0);
 					for (let packageName of allPackage) {
+						// @user/abc => @user/abc
+						// @user/abc/dist/xyz.js => @user/abc
+						// @user/abc/dist/xyz => @user/abc
 						if (packageName.startsWith('@'))
 							packageName = packageName.split('/').slice(0, 2).join('/');
 						else
 							packageName = packageName.split('/')[0];
-
+ 
 						if (!packageAlready.includes(packageName)) {
 							packageAlready.push(packageName);
 							if (!existsSync(`${process.cwd()}/node_modules/${packageName}`)) {
-								// স্পিনার / লাইভ মেসেজ বন্ধ
 								const wating = setInterval(() => {
-									count++; // শুধু কাউন্ট বাড়াবে, কিছু দেখাবে না
+									// loading.info('PACKAGE', `${spinner[count % spinner.length]} Installing package ${packageName} for ${text} ${file}`);
+									loading.info('PACKAGE', `${spinner[count % spinner.length]} Installing package ${colors.yellow(packageName)} for ${text} ${colors.yellow(file)}`);
+									count++;
 								}, 80);
 								try {
 									await exec(`npm install ${packageName} --${pathCommand.endsWith('.dev.js') ? 'no-save' : 'save'}`);
 									clearInterval(wating);
 									process.stderr.write('\r\x1b[K');
-									// স্পিনার মেসেজ বাদ দিলাম
-									// console.log(`${colors.green('✔')} installed package ${packageName} successfully`);
+									console.log(`${colors.green('✔')} installed package ${packageName} successfully`);
 								}
 								catch (err) {
 									clearInterval(wating);
 									process.stderr.write('\r\x1b[K');
-									// console.log(`${colors.red('✖')} installed package ${packageName} failed`);
+									console.log(`${colors.red('✖')} installed package ${packageName} failed`);
 									throw new Error(`Can't install package ${packageName}`);
 								}
 							}
 						}
 					}
 				}
-
+ 
 				// —————————————— CHECK CONTENT SCRIPT —————————————— //
 				global.temp.contentScripts[folderModules][file] = contentFile;
-
+ 
+ 
 				const command = require(pathCommand);
 				command.location = pathCommand;
 				const configCommand = command.config;
@@ -142,7 +151,7 @@ module.exports = async function (api, threadModel, userModel, dashBoardModel, gl
 				}
 				// ——————————————— CHECK ENV GLOBAL ——————————————— //
 				if (envGlobal) {
-					if (typeof envGlobal != "object" || Array.isArray(envGlobal))
+					if (typeof envGlobal != "object" || typeof envGlobal == "object" && Array.isArray(envGlobal))
 						throw new Error("the value of \"envGlobal\" must be object");
 					for (const i in envGlobal) {
 						if (!configCommands.envGlobal[i]) {
@@ -156,7 +165,7 @@ module.exports = async function (api, threadModel, userModel, dashBoardModel, gl
 				}
 				// ———————————————— CHECK CONFIG CMD ——————————————— //
 				if (envConfig) {
-					if (typeof envConfig != "object" || Array.isArray(envConfig))
+					if (typeof envConfig != "object" || typeof envConfig == "object" && Array.isArray(envConfig))
 						throw new Error("The value of \"envConfig\" must be object");
 					if (!configCommands[typeEnvCommand])
 						configCommands[typeEnvCommand] = {};
@@ -193,8 +202,9 @@ module.exports = async function (api, threadModel, userModel, dashBoardModel, gl
 				GoatBot[setMap].set(commandName.toLowerCase(), command);
 				commandLoadSuccess++;
 				// ————————————————— COMPARE COMMAND (removed in open source) ————————————————— //
-
+ 
 				global.GoatBot[folderModules == "cmds" ? "commandFilesPath" : "eventCommandsFilesPath"].push({
+					// filePath: pathCommand,
 					filePath: path.normalize(pathCommand),
 					commandName: [commandName, ...validAliases]
 				});
@@ -205,16 +215,13 @@ module.exports = async function (api, threadModel, userModel, dashBoardModel, gl
 					error
 				});
 			}
+			loading.info('LOADED', `${colors.green(`${commandLoadSuccess}`)}${commandError.length ? `, ${colors.red(`${commandError.length}`)}` : ''}`);
 		}
-
-		console.log(colors.green(`✔ Loaded ${commandLoadSuccess} ${text}(s)`) + 
-			(commandError.length ? colors.red(` | ✖ Failed ${commandError.length}`) : ''));
-
+		console.log("\r");
 		if (commandError.length > 0) {
-			log.err("SIDDIK LOADED", getText('loadScripts', 'loadScriptsError', colors.yellow(text)));
+			log.err("LOADED", getText('loadScripts', 'loadScriptsError', colors.yellow(text)));
 			for (const item of commandError)
 				console.log(` ${colors.red('✖ ' + item.name)}: ${item.error.message}\n`, item.error);
 		}
-		console.log("\r");
 	}
 };

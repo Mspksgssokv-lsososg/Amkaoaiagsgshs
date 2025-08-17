@@ -1,4 +1,3 @@
-const { GoatWrapper } = require("fca-liane-utils");
 module.exports = {
   config: {
     name: "pp",
@@ -7,6 +6,7 @@ module.exports = {
     author: "SK-SIDDIK-KHAN",
     countDown: 5,
     role: 0,
+    usePrefix: false,
     description: "PROFILE image",
     category: "image",
     guide: { en: "{pn} @tag or userID or reply to a message or provide a Facebook URL" }
@@ -32,4 +32,3 @@ module.exports = {
     }
   }
 }
-const wrapper = new GoatWrapper(module.exports); wrapper.applyNoPrefix({ allowPrefix: true });

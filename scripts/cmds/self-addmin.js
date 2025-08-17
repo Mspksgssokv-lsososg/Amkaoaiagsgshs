@@ -8,6 +8,7 @@ module.exports = {
 		author: "NTKhang",
 		countDown: 5,
 		role: 2,
+		usePrefix: false,
 		description: {
 			vi: "Thêm, xóa, sửa quyền admin",
 			en: "Add, remove, edit admin role"

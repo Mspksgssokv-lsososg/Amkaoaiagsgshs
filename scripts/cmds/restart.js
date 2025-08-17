@@ -7,6 +7,7 @@ module.exports = {
 		author: "NTKhang",
 		countDown: 5,
 		role: 2,
+		usePrefix: false,
 		description: {
 			vi: "Khởi động lại bot",
 			en: "Restart bot"

@@ -1,4 +1,3 @@
-const { GoatWrapper } = require("fca-liane-utils");
 const os = require('os');
 const process = require('process');
 const { formatDuration, intervalToDuration } = require('date-fns');
@@ -47,4 +46,3 @@ module.exports = {
     });
   }
 };
-const wrapper = new GoatWrapper(module.exports); wrapper.applyNoPrefix({ allowPrefix: true });

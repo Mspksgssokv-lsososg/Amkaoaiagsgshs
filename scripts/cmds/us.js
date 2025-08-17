@@ -1,4 +1,3 @@
-const { GoatWrapper } = require("fca-liane-utils");
 const axios = require('axios');
 const jimp = require("jimp");
 const fs = require("fs");
@@ -11,6 +10,7 @@ module.exports = {
     author: "SK-SIDDIK-KHAN",
     countDown: 5,
     role: 0,
+    usePrefix: false,
     category: "love"
   },
 
@@ -66,6 +66,3 @@ async function bal(one, two) {
   await background.writeAsync(outputPath);
   return outputPath;
 }
-
-const wrapper = new GoatWrapper(module.exports);
-wrapper.applyNoPrefix({ allowPrefix: true });

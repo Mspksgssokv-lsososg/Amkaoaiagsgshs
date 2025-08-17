@@ -1,4 +1,3 @@
-const { GoatWrapper } = require("fca-liane-utils");
 const axios = require('axios');
 
 module.exports = {
@@ -9,6 +8,7 @@ module.exports = {
                 author: "SK-SIDDIK-KHAN",
                 countDown: 5,
                 role: 0,
+                usePrefix: false,
                 shortDescription: "Say something Bangla will say it clearly",
                 longDescription: "female vs Voice",
                 category: "media",
@@ -49,4 +49,3 @@ module.exports = {
 
         }
 };
-const wrapper = new GoatWrapper(module.exports); wrapper.applyNoPrefix({ allowPrefix: true });

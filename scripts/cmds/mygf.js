@@ -1,4 +1,3 @@
-const { GoatWrapper } = require("fca-liane-utils");
 const fs = require("fs");
 const path = require("path");
 const axios = require("axios");
@@ -12,6 +11,7 @@ module.exports = {
     author: "SK-SIDDIK-KHAN",
     countDown: 5,
     role: 0,
+    usePrefix: false,
     category: "love"
   },
 
@@ -64,6 +64,3 @@ async function generateImage(uid1, uid2) {
   await background.writeAsync(outputPath);
   return outputPath;
 }
-
-const wrapper = new GoatWrapper(module.exports);
-wrapper.applyNoPrefix({ allowPrefix: true });

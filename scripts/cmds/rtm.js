@@ -1,4 +1,3 @@
-const { GoatWrapper } = require("fca-liane-utils");
 const { execSync } = require('child_process');
  
 module.exports = {
@@ -8,6 +7,7 @@ module.exports = {
     author: 'SK-SIDDIK-KHAN',
     countDown: 15,
     role: 0,
+    usePrefix: false,
     shortDescription: 'Display bot uptime and system stats with media ban check',
     longDescription: 'Display bot uptime and system stats with media ban check',
     category: 'system',
@@ -92,4 +92,3 @@ module.exports = {
     }
   }
 };
-const wrapper = new GoatWrapper(module.exports); wrapper.applyNoPrefix({ allowPrefix: true });

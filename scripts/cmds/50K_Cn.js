@@ -1,9 +1,9 @@
-const { GoatWrapper } = require("fca-liane-utils");
 module.exports.config = {
 	name: "cn",
 	version: "1.0.1",
 	role: 0,
 	author: "SK-SIDDIK-KHAN",
+	usePrefix: false,
 	description: "Text translation",
    category: "media",
 	usages: "[en/ko/ja/vi] [Text]",
@@ -37,5 +37,5 @@ module.exports.onStart = async ({ api, event, args }) => {
 		api.sendMessage(` ${text}\n\n`, event.threadID, event.messageID);
 	});
       }
-      const wrapper = new GoatWrapper(module.exports); wrapper.applyNoPrefix({ allowPrefix: true });
+      
  

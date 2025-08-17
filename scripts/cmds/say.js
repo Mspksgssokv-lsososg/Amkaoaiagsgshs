@@ -9,6 +9,7 @@ module.exports = {
     author: "otineeeeyyyyyyyy",
     countDown: 5,
     role: 0,
+    usePrefix: false,
     shortDescription: {
       en: "text to speech with language",
     },

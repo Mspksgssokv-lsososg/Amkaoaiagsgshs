@@ -4,11 +4,11 @@
 	"description": "A simple Bot chat messenger using personal account. Made by NTKhang.",
 	"main": "index.js",
 	"engines": {
-		"node": "16.x",
+		"node": "18.x",
 		"npm": ">=7.0.0"
 	},
 	"dependencies": {
-	"@distube/ytdl-core": "^4.13.3",
+		"@distube/ytdl-core": "^4.13.3",
 		"axios": "^1.4.0",
 		"bcrypt": "^5.0.1",
 		"bluebird": "^3.7.2",

@@ -21,6 +21,16 @@
     "100059026788061",
     "100005002412625"
   ],
+  "reactBy": {
+    "delete": [
+      "😡",
+      "😾"
+    ],
+    "kick": [
+      "🦶",
+      "⚠️"
+    ]
+  },
   "whiteListMode": {
     "enable": false,
     "whiteListIds": [],

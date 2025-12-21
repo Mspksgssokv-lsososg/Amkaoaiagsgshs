@@ -10,7 +10,8 @@ module.exports = {
   },
 
   onChat: function({ api, event }) {
-    const ownerID = "100005002412625",
+    const ownerID = "100005002412625";
+
     if (event.senderID !== ownerID) {
       const mentionedIDs = Object.keys(event.mentions || {});
 

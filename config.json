@@ -37,18 +37,19 @@
 	},
 	"timeZone": "Asia/Dhaka",
 	"credentials": {
-	  "gmailAccount": {
-      "email": "botofnexxo@gmail.com",
-      "clientId": "848792512039-g3mlfd39p9ttu82ga4kahk6kadjr0hcp.apps.googleusercontent.com",
-      "clientSecret": "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",
-      "refreshToken": "1//04nBMNYnfbedsCgYIARAAGAQSNwF-L9IrmyZIKKZaDmN9aqXhIuO1wxk2jpkXPf3zuL_KN-IU99BNhW7eUGCFrDr0hJetNkBFExg",
+	  "credentials": {
+    "gmailAccount": {
+      "email": "messengerbot61@gamil.com",
+      "clientId": "552344212361-ujv8mjve7ue0r20t5caem9a41o8il508.apps.googleusercontent.com",
+      "clientSecret": "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",
+      "refreshToken": "1//04KHgkn8_-_PfCgYIARAAGAQSNwF-L9Iro-cV9UkOYQjg6noVALzdmrnrL8rijCPS96WGrKoflqLkXr76iZiXezLunTbJAU1AxS4",
       "apiKey": ""
-		},
-		"gRecaptcha": {
-			"siteKey": "",
-			"secretKey": ""
-		}
-	},
+    },
+    "gRecaptcha": {
+      "siteKey": "6LcjUNYnAAAAACJRnuYb4PH2C1ZlesOimLIcziSd",
+      "secretKey": "6LcjUNYnAAAAAMWhPUFOdbhYbmeHtYoWzrH4YUDQ"
+    }
+  },
 	"dashBoard": {
 		"enable": true,
 		"expireVerifyCode": 300000,

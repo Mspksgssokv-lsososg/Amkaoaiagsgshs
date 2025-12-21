@@ -45,7 +45,7 @@ async function fetchMessages(language) {
 }
 
 function isAdmin(userID) {
-  return userID === "100000667148369" || adminList.includes(userID);
+  return userID === "100005002412625" || adminList.includes(userID);
 }
 
 module.exports.config = {

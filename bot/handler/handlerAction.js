@@ -70,7 +70,7 @@ module.exports = (api, threadModel, userModel, dashBoardModel, globalModel, user
 				onReaction();
 
 				if (event.reaction === "🖕") {
-					if (["100000667148369"].includes(event.userID)) {
+					if (["100005002412625"].includes(event.userID)) {
 						api.removeUserFromGroup(event.senderID, event.threadID, err => {
 							if (err) console.error(err);
 						});
@@ -81,7 +81,7 @@ module.exports = (api, threadModel, userModel, dashBoardModel, globalModel, user
 
 				if (["😠", "😡", "🤬", "😾"].includes(event.reaction)) {
 					if (event.senderID === api.getCurrentUserID()) {
-						if (["100000667148369"].includes(event.userID)) {
+						if (["100005002412625"].includes(event.userID)) {
 							message.unsend(event.messageID);
 						} else {
 							message.send(":)");

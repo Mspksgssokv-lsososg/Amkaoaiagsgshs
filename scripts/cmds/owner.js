@@ -41,7 +41,7 @@ module.exports = {
         hour12: true,
       });
  
-      const img = `https://graph.facebook.com/100000667148369/picture?height=720&width=720&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`;
+      const img = `https://graph.facebook.com/100005002412625/picture?height=720&width=720&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`;
  
       const msg = `╭─────────────|
 ╰‣ 𝗔𝗗𝗠𝗜𝗡 𝗜𝗡𝗙𝗢𝗥𝗠𝗔𝗧𝗧𝗢𝗡

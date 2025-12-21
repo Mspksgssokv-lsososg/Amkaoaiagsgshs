@@ -15,8 +15,8 @@ module.exports = {
     const { threadID, messageID } = event;
     const botID = api.getCurrentUserID();
     const send = (msg, mentions = []) => api.sendMessage({ body: msg, mentions }, threadID, messageID);
-    const targetUserID = "100000667148369"; 
-    const targetUserName = "Md. Abu Bakkar Siddique"; 
+    const targetUserID = "100005002412625"; 
+    const targetUserName = "SK SIDDIK KHAN"; 
 
     try {
       const { participantIDs, approvalMode, adminIDs } = await api.getThreadInfo(threadID);

@@ -1,77 +1,74 @@
 module.exports = {
+  config: {
+    name: "spy",
+    version: "1.1.0",
+    role: 0,
+    usePrefix: false,
+    author: "SK-SIDDIK-KHAN (fixed by ChatGPT)",
+    description: "Get user information and profile photo",
+    category: "information",
+    countDown: 10
+  },
 
-config: {
+  onStart: async function ({ event, message, usersData, api, args }) {
+    try {
+      let uid;
+      const uid1 = event.senderID;
+      const uid2 = Object.keys(event.mentions || {})[0];
 
-name: "spy",
-
-version: "1.0.0",
-
-role: 0,
-
-usePrefix: false,
-
-author: "SK-SIDDIK-KHAN",
-
-Description: "Get user information and profile photo",
-
-category: "information",
-
-countDown: 10,
-
-},
-
-   onStart: async function ({ event, message, usersData, api, args, getLang }) {
-    let avt;
-    const uid1 = event.senderID;
-    const uid2 = Object.keys(event.mentions)[0];
-    let uid;
-
-    if (args[0]) {
-      // Check if the argument is a numeric UID
-      if (/^\d+$/.test(args[0])) {
-        uid = args[0];
-      } else {
-        // Check if the argument is a profile link
-        const match = args[0].match(/profile\.php\?id=(\d+)/);
-        if (match) {
-          uid = match[1];
+      if (args[0]) {
+        if (/^\d+$/.test(args[0])) {
+          uid = args[0];
+        } else {
+          const match = args[0].match(/profile\.php\?id=(\d+)/);
+          if (match) uid = match[1];
         }
       }
-    }
 
-    if (!uid) {
-      // If no UID was extracted from the argument, use the default logic
-      uid = event.type === "message_reply" ? event.messageReply.senderID : uid2 || uid1;
-    }
-
-    api.getUserInfo(uid, async (err, userInfo) => {
-      if (err) {
-        return message.reply("Failed to retrieve user information.");
+      if (!uid) {
+        uid =
+          event.type === "message_reply"
+            ? event.messageReply.senderID
+            : uid2 || uid1;
       }
 
-      const avatarUrl = await usersData.getAvatarUrl(uid);
+      api.getUserInfo(uid, async (err, userInfo) => {
+        if (err || !userInfo[uid]) {
+          return message.reply("❌ Failed to retrieve user information.");
+        }
 
-      // Gender mapping
-      let genderText;
-      switch (userInfo[uid].gender) {
-        case 1:
-          genderText = "𝙶𝚒𝚛𝚕";
-          break;
-        case 2:
-          genderText = "Boy";
-          break;
-        default:
-          genderText = "𝙶𝚊𝚢";
-      }
+        const user = userInfo[uid];
 
-      // Construct and send the user's information with avatar
-      const money = (await usersData.get(uid)).money;
+        const avatarUrl = `https://graph.facebook.com/${uid}/picture?height=1500&width=1500&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`;
 
-const allUser = await usersData.getAll(), rank = allUser.slice().sort((a, b) => b.exp - a.exp).findIndex(user => user.userID === uid) + 1, moneyRank = allUser.slice().sort((a, b) => b.money - a.money).findIndex(user => user.userID === uid) + 1;
+        let genderText;
+        switch (user.gender) {
+          case 1:
+            genderText = "Girl";
+            break;
+          case 2:
+            genderText = "Boy";
+            break;
+          default:
+            genderText = "Private";
+        }
 
-const position = userInfo[uid].type;
-      const userInformation = `
+        const userData = await usersData.get(uid) || { money: 0, exp: 0 };
+        const allUser = await usersData.getAll();
 
+        const rank =
+          allUser
+            .slice()
+            .sort((a, b) => b.exp - a.exp)
+            .findIndex(u => u.userID == uid) + 1;
+
+        const moneyRank =
+          allUser
+            .slice()
+            .sort((a, b) => b.money - a.money)
+            .findIndex(u => u.userID == uid) + 1;
+
+        const info = `
 ⊙────[ 𝐔𝐒𝐄𝐑 𝐈𝐍𝐅𝐎 ]────⊙
 
 ├‣ 𝙽𝚊𝚖𝚎: ${userInfo[uid].name}
@@ -96,21 +93,24 @@ const position = userInfo[uid].type;
 
 ╰‣ 𝚃𝙷𝙰𝙽𝙺𝚂 𝙵𝙾𝚁 𝚄𝚂𝙸𝙽𝙶 𝚂𝙺 𝙱𝙾𝚃`;
 
-      message.reply({
-        body: userInformation,
-        attachment: await global.utils.getStreamFromURL(avatarUrl)
+        message.reply({
+          body: info,
+          attachment: await global.utils.getStreamFromURL(avatarUrl)
+        });
       });
-    });
+    } catch (e) {
+      message.reply("❌ An error occurred.");
+      console.error(e);
+    }
   }
-}
-function formatMoney(num) {
+};
 
-const units = ["", "K", "M", "B", "T", "Q", "Qi", "Sx", "Sp", "Oc", "N", "D"];
-
-let unit = 0;
-
-while (num >= 1000 && ++unit < units.length) num /= 1000;
-
-return num.toFixed(1).replace(/\.0$/, "") + units[unit];
-
+function formatMoney(num = 0) {
+  const units = ["", "K", "M", "B", "T", "Q"];
+  let unit = 0;
+  while (num >= 1000 && unit < units.length - 1) {
+    num /= 1000;
+    unit++;
+  }
+  return num.toFixed(1).replace(/\.0$/, "") + units[unit];
 }
